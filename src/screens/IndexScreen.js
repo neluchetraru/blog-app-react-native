@@ -13,7 +13,19 @@ const IndexScreen = ({ navigation }) => {
           ),
         });
       }, [navigation]);
-    const { state, deleteBlogPost } = useContext(BlogContext);
+    const { state, deleteBlogPost, getBlogPosts } = useContext(BlogContext);
+
+    useEffect(() => {
+        getBlogPosts();
+
+        const listener = navigation.addListener('focus', () => {
+            getBlogPosts(); 
+        });
+
+        return () => {
+            listener.remove();
+        }
+    }, []);
 
     return (
     <View>
